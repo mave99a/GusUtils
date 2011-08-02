@@ -205,12 +205,19 @@
 }
 
 - (void)setDateOriginal:(NSDate *)date {
-    [EXIF_DICT setObject:date forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
-    [TIFF_DICT setObject:date forKey:(NSString*)kCGImagePropertyTIFFDateTime];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy:MM:dd' 'HH:mm:ss"];
+    NSString* formatedDate = [formatter stringFromDate:date]; 
+    [EXIF_DICT setObject:formatedDate forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
+    [TIFF_DICT setObject:formatedDate forKey:(NSString*)kCGImagePropertyTIFFDateTime];
+    [formatter release];
 }
 
 - (void)setDateDigitized:(NSDate *)date {
-    [EXIF_DICT setObject:date forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy:MM:dd' 'HH:mm:ss"];
+    [EXIF_DICT setObject:[formatter stringFromDate:date] forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
+    [formatter release];
 }
 
 - (void)setMake:(NSString*)make model:(NSString*)model software:(NSString*)software {
